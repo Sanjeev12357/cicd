@@ -37,8 +37,5 @@ jobs:
             # Install dependencies and build
             npm install
 
-            # Optional: kill previous instance
-            pkill node || true
-
-            # Start your app (consider using PM2 here)
-            nohup npm run start > app.log 2>&1 &
+            npm run start
+            
