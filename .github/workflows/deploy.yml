@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
-      - name: executing remote ssh commands using password
+
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
           host: ec2-3-87-224-1.compute-1.amazonaws.com
@@ -21,8 +22,23 @@ jobs:
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           port: 22
           script: |
-            cd sanjeevnext
-            git pull
+            # Set working directory
+            cd ~
+            
+            # Clone the repo if it doesn't exist
+            if [ ! -d "sanjeevnext" ]; then
+              git clone https://github.com/Sanjeev12357/cicd.git
+            fi
+
+            # Navigate and pull latest changes
+            cd cicd
+            git pull origin main
+
+            # Install dependencies and build
             npm install
-            npm run build
-            npm run start
+
+            # Optional: kill previous instance
+            pkill node || true
+
+            # Start your app (consider using PM2 here)
+            nohup npm run start > app.log 2>&1 &
