@@ -17,7 +17,7 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ec2-3-87-224-1.compute-1.amazonaws.com
-          username: linuxserver.io
+          username: ubuntu
           key: ${{ secrets.PRIVATE_SSH_KEY }}
           port: 22
           script: whoami
