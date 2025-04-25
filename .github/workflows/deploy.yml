@@ -24,19 +24,25 @@ jobs:
           script: |
             # Set working directory
             cd ~
-            
+                      
             # Clone the repo if it doesn't exist
             if [ ! -d "cicd" ]; then
               git clone https://github.com/Sanjeev12357/cicd.git
             fi
-
+                      
             # Navigate and pull latest changes
             cd cicd
             git pull origin main
-
+                      
             # Install dependencies and build
             npm install
             npm run build
-            
-            npm run start
+                      
+            # Kill any previous Node.js processes
+            pkill node || true
+            # Wait a moment to ensure port is released
+            sleep 3
+                      
+            # Start application in background to keep it running after SSH session ends
+            nohup npm run start > app.log 2>&1 &
 
