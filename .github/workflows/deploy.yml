@@ -26,7 +26,7 @@ jobs:
             cd ~
             
             # Clone the repo if it doesn't exist
-            if [ ! -d "sanjeevnext" ]; then
+            if [ ! -d "cicd" ]; then
               git clone https://github.com/Sanjeev12357/cicd.git
             fi
 
